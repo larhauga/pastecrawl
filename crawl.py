@@ -62,7 +62,7 @@ def test_filetype(content):
 
 def main():
     try:
-        download(config.sites[0], get_archive(sites[0]))
+        download(config.sites[0], get_archive(config.sites[0]))
     except KeyboardInterrupt:
         print "Exiting..."
 
