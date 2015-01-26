@@ -3,7 +3,6 @@
 
 import sys
 import time
-import magic
 import random
 import couchdb
 import requests

@@ -4,6 +4,8 @@ Paste crawler
 A paste crawler that scrapes the websites, and stores it in a CouchDB
 structure.
 
+Install with: ```pip install -r requirements.txt```
+
 You can get up and running fast with docker, if you dont care much for
 security.
 
