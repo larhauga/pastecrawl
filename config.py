@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# server example: 'http://localhost:5984' or with login 'http://user:pass@localhost:5984'
 server = ''
 dbname = 'paste'
 
