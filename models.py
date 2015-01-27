@@ -8,3 +8,4 @@ class Paste(Document):
     content = TextField()
     filetype = TextField()
     registered = DateTimeField(default=datetime.now)
+    site = TextField()
