@@ -44,7 +44,7 @@ def download(site, links):
     for link in links:
         if not link in previous:
             r = requests.get(site['raw'] % link, headers=config.header)
-            paste = Paste(_id=link, content=r.text, filetype=test_filetype(r.text))
+            paste = Paste(_id=link, content=r.text, filetype=test_filetype(r.text), site=site['archive'])
             try:
                 paste.store(db)
                 print "Stored new object %s" % link
@@ -62,7 +62,8 @@ def test_filetype(content):
 
 def main():
     try:
-        download(config.sites[0], get_archive(config.sites[0]))
+        for site in config.sites:
+            download(site, get_archive(site))
     except KeyboardInterrupt:
         print "Exiting..."
 
