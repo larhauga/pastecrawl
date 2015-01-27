@@ -5,6 +5,7 @@ import sys
 import time
 import random
 import couchdb
+import argparse
 import requests
 import subprocess
 from models import Paste
@@ -44,7 +45,8 @@ def download(site, links):
     for link in links:
         if not link in previous:
             r = requests.get(site['raw'] % link, headers=config.header)
-            paste = Paste(_id=link, content=r.text, filetype=test_filetype(r.text), site=site['archive'])
+            paste = Paste(_id=link, content=r.text,
+                    filetype=test_filetype(r.text), site=site['archive'])
             try:
                 paste.store(db)
                 print "Stored new object %s" % link
@@ -60,10 +62,33 @@ def test_filetype(content):
     subprocess.call('rm tempfile'.split())
     return output.strip().split(':')[1].strip()
 
-def main():
-    try:
+def iterate(only_site=None):
+    if only_site:
+        s = filter(lambda x: only_site in x['archive'], config.sites)
+        if s:
+            print "Gathering values from site %s" % s['archive']
+            download(s, get_archive(s))
+        else:
+            sys.exit('Site not configured')
+    else:
         for site in config.sites:
             download(site, get_archive(site))
+
+def main():
+    parser = argparse.ArgumentParser(description="Crawler for pastbin like sites")
+    parser.add_argument('--site',
+            help="Only run on selected site. Must be present in config. Expects name")
+    parser.add_argument('-l', '--loop', metavar='sleeptime', type=int,
+            help="Run in a loop with specified sleeptime. Should be 5 (minutes) or more")
+
+    args = parser.parse_args()
+    try:
+        if args.loop:
+            while True:
+                iterate(only_site=args.site)
+                sleep(args.loop)
+        else:
+            iterate(only_site=args.site)
     except KeyboardInterrupt:
         print "Exiting..."
 
