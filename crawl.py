@@ -86,7 +86,7 @@ def main():
         if args.loop:
             while True:
                 iterate(only_site=args.site)
-                sleep(args.loop)
+                sleep(args.loop*60)
         else:
             iterate(only_site=args.site)
     except KeyboardInterrupt:
