@@ -3,6 +3,8 @@ Paste crawler
 
 A paste crawler that scrapes the websites, and stores it in a CouchDB
 structure.
+Use at own risk. Intended as a test for CouchDB, with the eventual integration
+of ELK stack for searching.
 
 ## Usage
 ```
